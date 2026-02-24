@@ -18,27 +18,31 @@ error() {
 }
 
 # Create a symlink, backing up any existing non-symlink file/directory first.
-# Usage: safe_link <source_in_dotfiles> <target_on_filesystem>
 safe_link() {
   local src="$1"
   local dst="$2"
 
-  # Create parent directory if it doesn't exist
   mkdir -p "$(dirname "$dst")"
 
-  # If the target already exists and is NOT already a symlink pointing here, back it up
   if [ -e "$dst" ] && [ ! -L "$dst" ]; then
     local backup="${dst}.bak.$(date +%Y%m%d_%H%M%S)"
     status "Backing up existing $(basename "$dst") → $backup"
     mv "$dst" "$backup"
   fi
 
-  # Remove any stale symlink
   [ -L "$dst" ] && rm "$dst"
 
   ln -sf "$src" "$dst"
   status "Linked $src → $dst"
 }
+
+# ──────────────────────────────────────────────
+# Ghostty
+# ──────────────────────────────────────────────
+
+status "Setting up Ghostty config"
+# Linking the config file specifically to match standard Ghostty pathing
+safe_link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
 
 # ──────────────────────────────────────────────
 # tmux
@@ -47,21 +51,11 @@ safe_link() {
 status "Setting up tmux config"
 safe_link "$DOTFILES_DIR/.config/tmux/.tmux.conf" "$HOME/.config/tmux/.tmux.conf"
 
-# Uncomment the block below if you start using TPM (tmux plugin manager).
-# See README for details.
-#
-# status "Setting up TPM (tmux plugin manager)"
-# mkdir -p ~/.config/tmux/plugins
-# if [ ! -d ~/.config/tmux/plugins/tpm ]; then
-#   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-# fi
-
 # ──────────────────────────────────────────────
 # Neovim
 # ──────────────────────────────────────────────
 
 status "Setting up Neovim config"
-# Symlink the entire nvim directory so new plugins/files are tracked automatically.
 safe_link "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
 
 status "Syncing Neovim plugins via lazy.nvim"

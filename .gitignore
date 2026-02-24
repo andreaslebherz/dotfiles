@@ -1,0 +1,10 @@
+# Neovim generated files — lazy-lock.json is intentionally tracked (pin plugin versions)
+# Uncomment the line below if you prefer NOT to track plugin version pins:
+# .config/nvim/lazy-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups created by install.sh
+*.bak.*

@@ -1,4 +1,6 @@
 # --- Splits (Terminator Style) ---
+keybind = ctrl+shift+o=unbind
+keybind = ctrl+shift+e=unbind
 keybind = ctrl+shift+o=new_split:down
 keybind = ctrl+shift+e=new_split:right
 
@@ -9,18 +11,18 @@ keybind = alt+up=goto_split:top
 keybind = alt+down=goto_split:bottom
 
 # --- Visuals & Typography ---
-adjust-cell-height = 20%
-font-family = "JetBrainsMono Nerd Font"
-font-size = 12
-theme = TokyoNight
+adjust-cell-height = 10%
+font-family = "FiraCode Nerd Font Mono"
+font-size = 10
+theme = Gruvbox Dark
 window-colorspace = "display-p3"
 
-# --- macOS Polish ---
-macos-non-native-fullscreen = true
-macos-titlebar-style = tabs
-macos-option-as-alt = true
-window-save-state = always
+# --- Opacity & Blur ---
+background-blur = true
+background-opacity = 0.85
+background-blur-radius = 20
 
+# --- Cursor --- 
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor

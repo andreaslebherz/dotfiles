@@ -16,6 +16,8 @@ font-family = "FiraCode Nerd Font Mono"
 font-size = 10
 theme = Gruvbox Dark
 window-colorspace = "display-p3"
+font-feature = -liga
+font-feature = -calt
 
 # --- Opacity & Blur ---
 background-blur = true

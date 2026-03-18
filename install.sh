@@ -49,7 +49,7 @@ safe_link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
 # ──────────────────────────────────────────────
 
 status "Setting up tmux config"
-safe_link "$DOTFILES_DIR/.config/tmux/.tmux.conf" "$HOME/.config/tmux/.tmux.conf"
+safe_link "$DOTFILES_DIR/.config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf"
 
 # ──────────────────────────────────────────────
 # Neovim

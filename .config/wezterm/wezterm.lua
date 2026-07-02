@@ -49,7 +49,10 @@ config.term = 'xterm-256color'
 local is_x11 = wezterm.target_triple:find 'linux' and not os.getenv 'WAYLAND_DISPLAY'
 config.window_decorations = is_x11 and 'RESIZE' or 'INTEGRATED_BUTTONS|RESIZE'
 config.use_fancy_tab_bar = true
-config.hide_tab_bar_if_only_one_tab = true -- tmux does the multiplexing: pure terminal until 2+ tabs
+-- Only X11 has a native WM titlebar with close/min/max buttons; elsewhere
+-- (Windows/macOS) those buttons are drawn inside the tab bar itself
+-- (INTEGRATED_BUTTONS above), so hiding the bar would hide them too.
+config.hide_tab_bar_if_only_one_tab = is_x11
 config.window_padding = { left = 4, right = 4, top = 2, bottom = 0 }
 
 -- Dim unfocused WezTerm splits for clear focus (no effect on tmux panes).
@@ -114,6 +117,14 @@ end)
 -- compositor (KDE/Wayland); WezTerm has no native Linux blur setting.
 if wezterm.target_triple:find 'windows' then
   config.win32_system_backdrop = 'Acrylic'
+  -- Default local shell: Git Bash (already installed with Git, no WSL
+  -- needed) instead of cmd.exe. Use bin/bash.exe, not git-bash.exe itself
+  -- (that one just spawns its own separate mintty window).
+  config.default_prog = {
+    'C:/Users/andreas.lebherz/AppData/Local/Programs/Git/bin/bash.exe',
+    '--login',
+    '-i',
+  }
 elseif wezterm.target_triple:find 'darwin' then
   config.macos_window_background_blur = 20
 end

@@ -114,6 +114,22 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, cfg, hover, max_width)
   }
 end)
 
+-- Battery percentage in the tab bar's right status (local machine only;
+-- renders empty on machines with no battery, e.g. the Linux desktop).
+wezterm.on('update-status', function(window, pane)
+  local batteries = wezterm.battery_info()
+  if #batteries == 0 then
+    window:set_right_status('')
+    return
+  end
+  local b = batteries[1]
+  local icon = b.state == 'Charging' and '⚡' or ''
+  window:set_right_status(wezterm.format {
+    { Foreground = { Color = scheme.foreground } },
+    { Text = string.format(' %s%.0f%% ', icon, b.state_of_charge * 100) },
+  })
+end)
+
 -- Per-OS blur (Ghostty background-blur = 20). Linux blur is left to the
 -- compositor (KDE/Wayland); WezTerm has no native Linux blur setting.
 if wezterm.target_triple:find 'windows' then

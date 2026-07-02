@@ -8,3 +8,4 @@ Thumbs.db
 
 # Backups created by install.sh
 *.bak.*
+.dual-graph/

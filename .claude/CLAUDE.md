@@ -9,6 +9,7 @@
 - Never refactor unrelated code outside the scope of the current task.
 
 ## Documentation
+- Commenting is an extremely limited tool that should only be applied when absolutely necessary.
 - Write 'why' comments, not 'what' comments. Explain reasoning; do not narrate code mechanics.
 - Mandate Doxygen-style block comments (/** ... */) with @brief tag for all declarations (functions, namespaces, templates). 
 - Require explicit @tparam tags for template parameters; prohibit unstructured header comments.

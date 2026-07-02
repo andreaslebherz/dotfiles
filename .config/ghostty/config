@@ -15,14 +15,12 @@ adjust-cell-height = 10%
 font-family = "FiraCode Nerd Font Mono"
 font-size = 10
 theme = Gruvbox Dark
-window-colorspace = "display-p3"
 font-feature = -liga
 font-feature = -calt
 
 # --- Opacity & Blur ---
-background-blur = true
+background-blur = 20
 background-opacity = 0.98
-background-blur-radius = 20
 
 # --- Cursor --- 
 cursor-style = block
@@ -30,6 +28,6 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 
 # --- Interaction & Compatibility ---
-copy-on-select = clipboard
-keybind = cmd+v=paste_from_clipboard
+copy-on-select = true
 term = xterm-256color
+shell-integration = detect

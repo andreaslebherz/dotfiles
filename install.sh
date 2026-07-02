@@ -37,6 +37,13 @@ safe_link() {
 }
 
 # ──────────────────────────────────────────────
+# Bash
+# ──────────────────────────────────────────────
+
+status "Setting up bash common config"
+safe_link "$DOTFILES_DIR/.config/bash/common.sh" "$HOME/.config/bash/common.sh"
+
+# ──────────────────────────────────────────────
 # Ghostty
 # ──────────────────────────────────────────────
 

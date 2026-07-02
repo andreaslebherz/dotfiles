@@ -47,7 +47,7 @@ config.term = 'xterm-256color'
 -- this isn't supported and the WM title bar can't be removed anyway (wezterm
 -- issue #3936 - broken Motif hints on Mutter), so fall back to plain RESIZE.
 local is_x11 = wezterm.target_triple:find 'linux' and not os.getenv 'WAYLAND_DISPLAY'
-config.window_decorations = is_x11 and 'RESIZE' or 'INTEGRATED_BUTTONS|RESIZE'
+config.window_decorations = true and 'RESIZE' or 'INTEGRATED_BUTTONS|RESIZE'
 config.use_fancy_tab_bar = true
 -- Only X11 has a native WM titlebar with close/min/max buttons; elsewhere
 -- (Windows/macOS) those buttons are drawn inside the tab bar itself
@@ -87,6 +87,7 @@ config.keys = {
   { key = 'RightArrow', mods = 'ALT', action = act.ActivatePaneDirection 'Right' },
   { key = 'UpArrow',    mods = 'ALT', action = act.ActivatePaneDirection 'Up' },
   { key = 'DownArrow',  mods = 'ALT', action = act.ActivatePaneDirection 'Down' },
+  { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1b\r' },
 }
 
 -- Ghostty copy-on-select = true: copy to clipboard on mouse selection.

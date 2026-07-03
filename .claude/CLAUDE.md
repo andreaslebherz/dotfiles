@@ -1,5 +1,9 @@
 # Global Directives
 
+## General Guidelines
+- Never use the em dash "—"; use plain dash "-" instead.
+- When writing commit messages, never auto-add your agent name as co-author.
+
 ## Core Communication
 - Keep interactions and commit messages ultra-concise. Telegraphic style; prioritize absolute brevity; sacrifice grammar.
 - If ambiguous, stop and ask for clarification. Do not guess.

@@ -88,6 +88,16 @@ config.keys = {
   { key = 'UpArrow',    mods = 'ALT', action = act.ActivatePaneDirection 'Up' },
   { key = 'DownArrow',  mods = 'ALT', action = act.ActivatePaneDirection 'Down' },
   { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1b\r' },
+  -- Jump to tabs 1-9 with ALT + number.
+  { key = '1', mods = 'ALT', action = act.ActivateTab(0) },
+  { key = '2', mods = 'ALT', action = act.ActivateTab(1) },
+  { key = '3', mods = 'ALT', action = act.ActivateTab(2) },
+  { key = '4', mods = 'ALT', action = act.ActivateTab(3) },
+  { key = '5', mods = 'ALT', action = act.ActivateTab(4) },
+  { key = '6', mods = 'ALT', action = act.ActivateTab(5) },
+  { key = '7', mods = 'ALT', action = act.ActivateTab(6) },
+  { key = '8', mods = 'ALT', action = act.ActivateTab(7) },
+  { key = '9', mods = 'ALT', action = act.ActivateTab(8) },
 }
 
 -- Ghostty copy-on-select = true: copy to clipboard on mouse selection.

@@ -13,7 +13,10 @@ alias r="reset"
 # alias st="if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then git status; else cd ~/repos/YOUR_PROJECT && git status; fi"
 alias pull="git pull && git submodule update --recursive"
 
-# Ghostty shell integration — emits OSC 7 (CWD) so splits open in correct directory
-if [ -n "$GHOSTTY_RESOURCES_DIR" ]; then
-    builtin source "$GHOSTTY_RESOURCES_DIR/shell-integration/bash/ghostty.bash"
+# Inside nvim's built-in terminal, WezTerm/tmux shell-integration escapes
+# (OSC 7 CWD + OSC 1337 user-vars) can't be parsed and leak as raw text on the
+# prompt. nvim exports $NVIM in :term children, so suppress the hooks there.
+if [ -n "$NVIM" ]; then
+    export WEZTERM_SHELL_SKIP_ALL=1
+    PROMPT_COMMAND=""
 fi

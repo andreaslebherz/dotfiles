@@ -1,0 +1,24 @@
+BasedOnStyle: Google
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+ColumnLimit: 140
+
+# Formatting for braces
+BraceWrapping:
+  AfterNamespace: true # place new line after the namespace keyword before the brace
+  BeforeCatch: true # place braces on a new line before catch
+  AfterFunction: true # place braces on a new line after function
+
+# Formatting for namespace blocks
+NamespaceIndentation: All # indent all nested namespaces
+CompactNamespaces: true # compact namespaces into a single line if possible
+
+BreakBeforeBraces:
+  Stroustrup
+  # braces for control statements (if, while, etc.) are attached.
+  # braces for definitions (classes, structs, enums) are typically on a new line.
+PointerAlignment: Left
+
+# Allow developer to decide on bin packing
+ExperimentalAutoDetectBinPacking: true

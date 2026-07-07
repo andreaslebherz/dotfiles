@@ -74,6 +74,13 @@ else
 fi
 
 # ──────────────────────────────────────────────
+# clang-format
+# ──────────────────────────────────────────────
+
+status "Setting up global clang-format config"
+safe_link "$DOTFILES_DIR/.config/clang-format/.clang-format" "$HOME/.clang-format"
+
+# ──────────────────────────────────────────────
 # Claude Code
 # ──────────────────────────────────────────────
 ln -sf ~/repos/dotfiles/.claude/CLAUDE.md ~/.claude/CLAUDE.md

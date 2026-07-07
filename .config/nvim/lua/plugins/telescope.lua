@@ -4,10 +4,12 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     { "nvim-tree/nvim-web-devicons", enabled = true },
+    "nvim-telescope/telescope-live-grep-args.nvim",
   },
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
+    local lga_actions = require("telescope-live-grep-args.actions")
 
     telescope.setup({
       defaults = {
@@ -24,21 +26,36 @@ return {
           },
         },
       },
+      extensions = {
+        live_grep_args = {
+          -- <C-k>/<C-j> are taken by result nav above; quote_prompt goes on <C-g> instead
+          mappings = {
+            i = {
+              ["<C-g>"] = lga_actions.quote_prompt(),
+            },
+          },
+        },
+      },
     })
+    telescope.load_extension("live_grep_args")
 
     -- Set keymaps
     local keymap = vim.keymap
 
     -- VS Code style Ctrl+P (hidden=true so files under .config/ are visible)
     keymap.set("n", "<C-p>", "<cmd>Telescope find_files hidden=true<cr>", { desc = "Fuzzy find files" })
-   
+
     -- Grep (Search string in project)
-    keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
+    keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep_args<cr>", { desc = "Find string in cwd" })
 
     -- Jump between open buffers
     keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find open buffers" })
     
     -- Find string under cursor (Super useful for C++)
-    keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor" })
+    keymap.set("n", "<leader>fc", function()
+      require("telescope").extensions.live_grep_args.live_grep_args({
+        default_text = '"' .. vim.fn.expand("<cword>") .. '" ',
+      })
+    end, { desc = "Find string under cursor" })
   end,
 }

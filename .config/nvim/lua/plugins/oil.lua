@@ -33,7 +33,7 @@ return {
         end,
         -- Live grep in current directory
         ["<leader>fg"] = function()
-          require("telescope.builtin").live_grep({
+          require("telescope").extensions.live_grep_args.live_grep_args({
             cwd = oil.get_current_dir(),
           })
         end,

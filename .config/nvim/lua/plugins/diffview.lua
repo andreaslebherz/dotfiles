@@ -3,7 +3,23 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
   keys = {
-    { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
+    {
+      "<leader>gd",
+      function()
+        local lib = require("diffview.lib")
+        local view
+        for _, v in pairs(lib.views) do
+          view = v
+          break
+        end
+        if view then
+          vim.api.nvim_set_current_tabpage(view.tabpage)
+        else
+          vim.cmd("DiffviewOpen")
+        end
+      end,
+      desc = "Diffview open",
+    },
     { "<leader>gc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
     { "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", desc = "File history" },
   },

@@ -20,9 +20,13 @@ keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right split" })
 keymap.set("n", "<leader>w", "<cmd>w<CR>", { desc = "Save file" })
 keymap.set("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
 
--- Scroll one line at a time (cursor stays put), no need for Ctrl-e/Ctrl-y
-keymap.set({ "n", "v" }, "<C-d>", "<C-e>", { desc = "Scroll down one line" })
-keymap.set({ "n", "v" }, "<C-u>", "<C-y>", { desc = "Scroll up one line" })
+keymap.set("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+end, { desc = "Copy file path" })
+
+keymap.set({ "n", "v", "x" }, "<C-z>", function()
+  require("neoscroll").scroll(-0.1, { move_cursor = false, duration = 100 })
+end, { desc = "Scroll up one line" })
 
 -- Stay in indent mode
 keymap.set("v", "<", "<gv")

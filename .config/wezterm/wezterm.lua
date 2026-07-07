@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 -- --- Visuals & Typography ---
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 config.font_size = 10
-config.line_height = 1.10 -- Ghostty adjust-cell-height = 10%
+config.line_height = 1.0
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Ghostty -liga -calt
 -- Theme — change this ONE line to re-theme everything; the tab bar derives from it.
 local scheme_name = 'Gruvbox Dark (Gogh)' -- try: 'Tokyo Night', 'Tokyo Night Storm', 'Tokyo Night Moon'

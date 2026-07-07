@@ -6,6 +6,7 @@ return {
             formatters_by_ft = {
                 cpp = { "clang-format" },
                 c = { "clang-format" },
+                cuda = { "clang-format" },
             },
             format_on_save = {
                 timeout_ms = 500,

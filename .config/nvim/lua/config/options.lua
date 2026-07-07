@@ -24,6 +24,9 @@ opt.splitright = true
 opt.splitbelow = true
 opt.scrolloff = 8
 
+-- Cursor in builtin terminal
+opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkon0"
+
 -- Auto-reload files changed on disk. The agent writes in a separate process,
 -- so without this nvim keeps a stale buffer and gitsigns a stale diff.
 opt.autoread = true

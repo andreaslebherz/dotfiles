@@ -11,7 +11,7 @@ config.font_size = 10
 config.line_height = 1.0
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Ghostty -liga -calt
 -- Theme — change this ONE line to re-theme everything; the tab bar derives from it.
-local scheme_name = 'Gruvbox Dark (Gogh)' -- try: 'Tokyo Night', 'Tokyo Night Storm', 'Tokyo Night Moon'
+local scheme_name = 'Gruvbox Dark (Gogh)'                   -- try: 'Tokyo Night' 'Tokyo Night Moon'
 config.color_scheme = scheme_name
 local scheme = wezterm.color.get_builtin_schemes()[scheme_name]
 
@@ -23,8 +23,8 @@ config.freetype_render_target = 'Normal'
 -- font (jarring, looks lower-res). Render italic/bold-italic as upright FiraCode.
 config.font_rules = {
   { italic = true, intensity = 'Normal', font = wezterm.font 'FiraCode Nerd Font Mono' },
-  { italic = true, intensity = 'Half', font = wezterm.font 'FiraCode Nerd Font Mono' },
-  { italic = true, intensity = 'Bold', font = wezterm.font('FiraCode Nerd Font Mono', { weight = 'Bold' }) },
+  { italic = true, intensity = 'Half',   font = wezterm.font 'FiraCode Nerd Font Mono' },
+  { italic = true, intensity = 'Bold',   font = wezterm.font('FiraCode Nerd Font Mono', { weight = 'Bold' }) },
 }
 
 -- --- Opacity & Blur --- (blur is per-OS at the bottom)
@@ -81,23 +81,35 @@ config.colors = {
 -- --- Splits (Terminator Style) ---
 -- --- Navigation (Alt + Arrow Keys) ---
 config.keys = {
-  { key = 'o', mods = 'CTRL|SHIFT', action = act.SplitPane { direction = 'Down' } },
-  { key = 'e', mods = 'CTRL|SHIFT', action = act.SplitPane { direction = 'Right' } },
-  { key = 'LeftArrow',  mods = 'ALT', action = act.ActivatePaneDirection 'Left' },
-  { key = 'RightArrow', mods = 'ALT', action = act.ActivatePaneDirection 'Right' },
-  { key = 'UpArrow',    mods = 'ALT', action = act.ActivatePaneDirection 'Up' },
-  { key = 'DownArrow',  mods = 'ALT', action = act.ActivatePaneDirection 'Down' },
-  { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1b\r' },
+  { key = 'o',          mods = 'CTRL|SHIFT', action = act.SplitPane { direction = 'Down' } },
+  { key = 'e',          mods = 'CTRL|SHIFT', action = act.SplitPane { direction = 'Right' } },
+  { key = 'LeftArrow',  mods = 'ALT',        action = act.ActivatePaneDirection 'Left' },
+  { key = 'RightArrow', mods = 'ALT',        action = act.ActivatePaneDirection 'Right' },
+  { key = 'UpArrow',    mods = 'ALT',        action = act.ActivatePaneDirection 'Up' },
+  { key = 'DownArrow',  mods = 'ALT',        action = act.ActivatePaneDirection 'Down' },
+  { key = 'Enter',      mods = 'SHIFT',      action = act.SendString '\x1b\r' },
   -- Jump to tabs 1-9 with ALT + number.
-  { key = '1', mods = 'ALT', action = act.ActivateTab(0) },
-  { key = '2', mods = 'ALT', action = act.ActivateTab(1) },
-  { key = '3', mods = 'ALT', action = act.ActivateTab(2) },
-  { key = '4', mods = 'ALT', action = act.ActivateTab(3) },
-  { key = '5', mods = 'ALT', action = act.ActivateTab(4) },
-  { key = '6', mods = 'ALT', action = act.ActivateTab(5) },
-  { key = '7', mods = 'ALT', action = act.ActivateTab(6) },
-  { key = '8', mods = 'ALT', action = act.ActivateTab(7) },
-  { key = '9', mods = 'ALT', action = act.ActivateTab(8) },
+  { key = '1',          mods = 'ALT',        action = act.ActivateTab(0) },
+  { key = '2',          mods = 'ALT',        action = act.ActivateTab(1) },
+  { key = '3',          mods = 'ALT',        action = act.ActivateTab(2) },
+  { key = '4',          mods = 'ALT',        action = act.ActivateTab(3) },
+  { key = '5',          mods = 'ALT',        action = act.ActivateTab(4) },
+  { key = '6',          mods = 'ALT',        action = act.ActivateTab(5) },
+  { key = '7',          mods = 'ALT',        action = act.ActivateTab(6) },
+  { key = '8',          mods = 'ALT',        action = act.ActivateTab(7) },
+  { key = '9',          mods = 'ALT',        action = act.ActivateTab(8) },
+  {
+    key = 'R',
+    mods = 'CTRL|SHIFT',
+    action = act.PromptInputLine {
+      description = 'Rename tab:',
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  },
 }
 
 -- Ghostty copy-on-select = true: copy to clipboard on mouse selection.

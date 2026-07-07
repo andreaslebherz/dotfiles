@@ -30,7 +30,7 @@ return {
         map("n", "gd", vim.lsp.buf.definition)
         map("n", "gD", vim.lsp.buf.declaration)
         map("n", "gi", vim.lsp.buf.implementation)
-        map("n", "gr", vim.lsp.buf.references)
+        map("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
         map("n", "K", vim.lsp.buf.hover)
         map("n", "<leader>rn", vim.lsp.buf.rename)
         map("n", "[d", vim.diagnostic.goto_prev)

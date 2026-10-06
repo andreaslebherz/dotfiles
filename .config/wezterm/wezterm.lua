@@ -41,18 +41,29 @@ config.xcursor_size = 24
 -- --- Interaction & Compatibility ---
 -- xterm-256color for tmux-over-SSH: remote hosts lack wezterm terminfo.
 config.term = 'xterm-256color'
+config.enable_wayland = true
+config.front_end = 'OpenGL'
+config.prefer_egl = true
 
 -- --- Window chrome & tab bar ---
 -- Fold window buttons into the fancy tab bar (one unified top bar). On GNOME/X11
 -- this isn't supported and the WM title bar can't be removed anyway (wezterm
 -- issue #3936 - broken Motif hints on Mutter), so fall back to plain RESIZE.
-local is_x11 = wezterm.target_triple:find 'linux' and not os.getenv 'WAYLAND_DISPLAY'
-config.window_decorations = true and 'RESIZE' or 'INTEGRATED_BUTTONS|RESIZE'
+local is_linux = wezterm.target_triple:find 'linux' and true or false
+local is_x11 = is_linux and not os.getenv 'WAYLAND_DISPLAY'
+local is_wayland = is_linux and not is_x11
+if is_x11 then
+  config.window_decorations = 'RESIZE'
+elseif is_wayland then
+  config.window_decorations = 'TITLE|RESIZE'
+else
+  config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
+end
 config.use_fancy_tab_bar = true
 -- Only X11 has a native WM titlebar with close/min/max buttons; elsewhere
 -- (Windows/macOS) those buttons are drawn inside the tab bar itself
 -- (INTEGRATED_BUTTONS above), so hiding the bar would hide them too.
-config.hide_tab_bar_if_only_one_tab = is_x11
+config.hide_tab_bar_if_only_one_tab = is_x11 or is_wayland
 config.window_padding = { left = 4, right = 4, top = 2, bottom = 0 }
 
 -- Dim unfocused WezTerm splits for clear focus (no effect on tmux panes).

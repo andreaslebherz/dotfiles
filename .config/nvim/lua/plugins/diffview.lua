@@ -29,13 +29,13 @@ return {
       keymaps = {
         -- ä/ö for next/prev instead of ]c/[c and Tab: brackets need AltGr on a
         -- German layout. ä = forward, ö = back, everywhere in Diffview.
-        view = {
-          { "n", "ä", "]c", { desc = "Next change" } },
-          { "n", "ö", "[c", { desc = "Prev change" } },
-        },
         file_panel = {
           { "n", "ä", actions.select_next_entry, { desc = "Next file" } },
           { "n", "ö", actions.select_prev_entry, { desc = "Prev file" } },
+          { "n", "ü", actions.toggle_stage_entry, { desc = "Toggle stage" } },
+        },
+        view = {
+          { "n", "ü", actions.toggle_stage_entry, { desc = "Toggle stage" } },
         },
       },
     })

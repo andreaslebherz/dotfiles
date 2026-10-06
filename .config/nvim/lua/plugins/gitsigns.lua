@@ -12,6 +12,7 @@ return {
         -- a German layout, and these are repeated a lot while reviewing.
         keymap.set("n", "ä", function() gs.nav_hunk("next") end, { buffer = bufnr, desc = "Next git hunk" })
         keymap.set("n", "ö", function() gs.nav_hunk("prev") end, { buffer = bufnr, desc = "Prev git hunk" })
+        keymap.set("n", "ü", gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
 
         -- Post-apply review: stage / reset / preview individual hunks.
         keymap.set("n", "<leader>gs", gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })

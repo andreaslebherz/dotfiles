@@ -7,6 +7,9 @@ return {
       default_file_explorer = true,
       delete_to_trash = true,
       skip_confirm_for_simple_edits = true,
+      preview_win = {
+        update_on_cursor_moved = true,
+      },
       view_options = {
         show_hidden = true,
         is_hidden_file = function(name, bufnr)
@@ -40,7 +43,7 @@ return {
       },
     })
 
-    -- The magic toggle
+
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
   end,
 }

@@ -50,6 +50,9 @@ return {
 
     -- Jump between open buffers
     keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find open buffers" })
+
+    -- Resume last picker (same search, results, cursor position)
+    keymap.set("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "Resume last picker" })
     
     -- Find string under cursor (Super useful for C++)
     keymap.set("n", "<leader>fc", function()

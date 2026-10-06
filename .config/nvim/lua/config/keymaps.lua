@@ -28,6 +28,12 @@ keymap.set({ "n", "v", "x" }, "<C-z>", function()
   require("neoscroll").scroll(-0.1, { move_cursor = false, duration = 100 })
 end, { desc = "Scroll up one line" })
 
+-- gitsigns' <leader>g* maps are buffer-local, so in an unattached buffer (diffview://,
+-- terminals) they fall through to vanilla gR (virtual replace mode) and gs (sleep).
+-- Neither is ever wanted here, and both look like nvim has broken.
+keymap.set("n", "gR", "<Nop>")
+keymap.set("n", "gs", "<Nop>")
+
 -- Stay in indent mode
 keymap.set("v", "<", "<gv")
 keymap.set("v", ">", ">gv")

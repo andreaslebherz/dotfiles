@@ -41,7 +41,8 @@ config.xcursor_size = 24
 -- --- Interaction & Compatibility ---
 -- xterm-256color for tmux-over-SSH: remote hosts lack wezterm terminfo.
 config.term = 'xterm-256color'
-config.enable_wayland = true
+-- XWayland: native Wayland drag-and-drop crashed the GUI (wl_data_offer protocol error, 2026-10-13).
+config.enable_wayland = false
 config.front_end = 'OpenGL'
 config.prefer_egl = true
 

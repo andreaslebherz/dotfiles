@@ -47,6 +47,18 @@ keymap.set("n", "-", "<CMD>Explore<CR>", { desc = "Open File Explorer" })
 -- Normal and Visual mode: 'd' deletes to the black hole
 vim.keymap.set({"n", "v"}, "d", '"_d', { desc = "Delete without copying" })
 vim.keymap.set({"n", "v"}, "dd", '"_dd', { desc = "Delete line without copying" })
+vim.keymap.set({"n", "x"}, "D", '"_D', { desc = "Delete to end without copying" })
+vim.keymap.set({"n", "x"}, "x", '"_x', { desc = "Delete char without copying" })
+vim.keymap.set({"n", "x"}, "X", '"_X', { desc = "Delete char before without copying" })
+vim.keymap.set({"n", "x"}, "c", '"_c', { desc = "Change without copying" })
+vim.keymap.set({"n", "x"}, "C", '"_C', { desc = "Change to end without copying" })
+vim.keymap.set({"n", "x"}, "s", '"_s', { desc = "Substitute without copying" })
+vim.keymap.set({"n", "x"}, "S", '"_S', { desc = "Substitute line without copying" })
+vim.keymap.set("x", "p", "P", { desc = "Paste over selection without copying" })
+
+for _, lhs in ipairs({ "<LeftRelease>", "<2-LeftRelease>", "<3-LeftRelease>" }) do
+  vim.keymap.set("x", lhs, '"+y<Cmd>let @*=@+<CR>gv', { desc = "Copy on mouse select" })
+end
 
 --- Custom vscode like terminal
 local term_buf = nil

@@ -16,5 +16,6 @@ require("lazy").setup({
     { import = "plugins" },
   },
   checker = { enabled = true },
+  rocks = { enabled = false },
   change_detection = { notify = false },
 })

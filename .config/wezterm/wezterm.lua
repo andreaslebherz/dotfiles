@@ -168,14 +168,19 @@ end)
 -- compositor (KDE/Wayland); WezTerm has no native Linux blur setting.
 if wezterm.target_triple:find 'windows' then
   config.win32_system_backdrop = 'Acrylic'
-  -- Default local shell: Git Bash (already installed with Git, no WSL
-  -- needed) instead of cmd.exe. Use bin/bash.exe, not git-bash.exe itself
-  -- (that one just spawns its own separate mintty window).
-  config.default_prog = {
-    'C:/Users/andreas.lebherz/AppData/Local/Programs/Git/bin/bash.exe',
-    '--login',
-    '-i',
-  }
+  -- WSL at home, Git Bash fallback at work (no WSL there).
+  local wsl_domains = wezterm.default_wsl_domains()
+  if #wsl_domains > 0 then
+    config.default_domain = wsl_domains[1].name
+  else
+    -- Use bin/bash.exe, not git-bash.exe itself (that one just spawns its
+    -- own separate mintty window). Per-user Git install under LOCALAPPDATA.
+    config.default_prog = {
+      os.getenv('LOCALAPPDATA') .. '/Programs/Git/bin/bash.exe',
+      '--login',
+      '-i',
+    }
+  end
 elseif wezterm.target_triple:find 'darwin' then
   config.macos_window_background_blur = 20
 end

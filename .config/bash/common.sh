@@ -20,3 +20,21 @@ if [ -n "$NVIM" ]; then
     export WEZTERM_SHELL_SKIP_ALL=1
     PROMPT_COMMAND=""
 fi
+
+# tmux: attach to (or create) a session; inside tmux, switch instead of nesting.
+tm() {
+    if [ -z "$1" ]; then
+        tmux attach 2>/dev/null || tmux new-session
+    elif [ -n "$TMUX" ]; then
+        tmux has-session -t "=$1" 2>/dev/null || tmux new-session -d -s "$1"
+        tmux switch-client -t "=$1"
+    else
+        tmux new-session -A -s "$1"
+    fi
+}
+
+_tm_complete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=($(compgen -W "$(tmux list-sessions -F '#S' 2>/dev/null)" -- "$cur"))
+}
+complete -F _tm_complete tm

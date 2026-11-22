@@ -42,11 +42,27 @@ chmod +x install.sh
 
 The script will:
 
-1. Symlink `~/.config/tmux/.tmux.conf` → `dotfiles/.config/tmux/.tmux.conf`
+1. Symlink `~/.config/tmux/tmux.conf` → `dotfiles/.config/tmux/tmux.conf`
 2. Symlink `~/.config/nvim` → `dotfiles/.config/nvim` (entire directory)
 3. Run `nvim --headless "+Lazy! sync" +qa` to install all plugins
 
 Any pre-existing file/directory is automatically backed up with a timestamped `.bak` suffix before being replaced.
+
+## WSL2 (Windows)
+
+Prereqs on Windows: `winget install wez.wezterm`, then FiraCode Nerd Font
+(`FiraCode.zip` from nerdfonts.com, select all .ttf, "Install for all users").
+
+On WSL, `install.sh` additionally:
+
+- apt installs build tools, ripgrep, fd, node, clang-format, tmux
+- installs latest Neovim to `/opt`, tree-sitter CLI, win32yank (clipboard), `fd` link
+- writes `%USERPROFILE%\.wezterm.lua` stub loading the repo config via `\\wsl$`
+- creates Start Menu shortcut with Ctrl+Alt+T
+- warns if the font is missing
+
+WezTerm defaults to the WSL distro when one exists, else Git Bash.
+To update Neovim: `sudo rm /usr/local/bin/nvim` and re-run.
 
 ## tmux: TPM (plugin manager)
 

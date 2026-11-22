@@ -10,10 +10,28 @@ config.font = wezterm.font 'FiraCode Nerd Font Mono'
 config.font_size = 10
 config.line_height = 1.0
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Ghostty -liga -calt
+local wsl_domains = wezterm.target_triple:find 'windows' and wezterm.default_wsl_domains() or {}
+
+-- Palette from Canonical's Windows Terminal fragment (Ubuntu-ColorScheme).
+-- Selection is mid aubergine, not WT's white: WezTerm paints it solid and the tab bar reuses it.
+local schemes = wezterm.color.get_builtin_schemes()
+schemes['Ubuntu (WSL)'] = {
+  background = '#300A24',
+  foreground = '#FFFFFF',
+  cursor_bg = '#FFFFFF',
+  cursor_border = '#FFFFFF',
+  cursor_fg = '#300A24',
+  selection_bg = '#5E2750',
+  selection_fg = '#FFFFFF',
+  ansi = { '#1B1B1B', '#CC1A12', '#4E9A06', '#C4A000', '#3667A6', '#7F5985', '#06989A', '#D5D5D5' },
+  brights = { '#838383', '#F93632', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8', '#34E2E2', '#EEEEEC' },
+}
+config.color_schemes = { ['Ubuntu (WSL)'] = schemes['Ubuntu (WSL)'] }
+
 -- Theme — change this ONE line to re-theme everything; the tab bar derives from it.
-local scheme_name = 'Gruvbox Dark (Gogh)'                   -- try: 'Tokyo Night' 'Tokyo Night Moon'
+local scheme_name = #wsl_domains > 0 and 'Ubuntu (WSL)' or 'Gruvbox Dark (Gogh)' -- try: 'Tokyo Night' 'Tokyo Night Moon'
 config.color_scheme = scheme_name
-local scheme = wezterm.color.get_builtin_schemes()[scheme_name]
+local scheme = schemes[scheme_name]
 
 -- Crisper glyph rendering on LCD panels (subpixel). Drop to 'Normal' if fringing.
 config.freetype_load_target = 'Normal'
@@ -92,13 +110,28 @@ config.colors = {
 
 -- --- Splits (Terminator Style) ---
 -- --- Navigation (Alt + Arrow Keys) ---
+-- No WezTerm split that way: pass the key through so tmux can switch its panes.
+local function nav(key, dir)
+  return {
+    key = key,
+    mods = 'ALT',
+    action = wezterm.action_callback(function(window, pane)
+      if pane:tab():get_pane_direction(dir) then
+        window:perform_action(act.ActivatePaneDirection(dir), pane)
+      else
+        window:perform_action(act.SendKey { key = key, mods = 'ALT' }, pane)
+      end
+    end),
+  }
+end
+
 config.keys = {
   { key = 'o',          mods = 'CTRL|SHIFT', action = act.SplitPane { direction = 'Down' } },
   { key = 'e',          mods = 'CTRL|SHIFT', action = act.SplitPane { direction = 'Right' } },
-  { key = 'LeftArrow',  mods = 'ALT',        action = act.ActivatePaneDirection 'Left' },
-  { key = 'RightArrow', mods = 'ALT',        action = act.ActivatePaneDirection 'Right' },
-  { key = 'UpArrow',    mods = 'ALT',        action = act.ActivatePaneDirection 'Up' },
-  { key = 'DownArrow',  mods = 'ALT',        action = act.ActivatePaneDirection 'Down' },
+  nav('LeftArrow', 'Left'),
+  nav('RightArrow', 'Right'),
+  nav('UpArrow', 'Up'),
+  nav('DownArrow', 'Down'),
   { key = 'Enter',      mods = 'SHIFT',      action = act.SendString '\x1b\r' },
   -- Jump to tabs 1-9 with ALT + number.
   { key = '1',          mods = 'ALT',        action = act.ActivateTab(0) },
@@ -169,7 +202,6 @@ end)
 if wezterm.target_triple:find 'windows' then
   config.win32_system_backdrop = 'Acrylic'
   -- WSL at home, Git Bash fallback at work (no WSL there).
-  local wsl_domains = wezterm.default_wsl_domains()
   if #wsl_domains > 0 then
     config.default_domain = wsl_domains[1].name
   else
